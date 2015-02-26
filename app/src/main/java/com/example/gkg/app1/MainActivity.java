@@ -31,6 +31,15 @@ public class MainActivity extends ActionBarActivity {
         txtLogin = (TextView)findViewById(R.id.txtResult);
         txtPassword = (TextView)findViewById(R.id.txtPassword);
 
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                txtLogin.setText("");
+                txtPassword.setText("");
+
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,12 +54,11 @@ public class MainActivity extends ActionBarActivity {
                     loginInfo.setLogin(txtLogin.getText().toString());
                     loginInfo.setPassword(txtPassword.getText().toString());
 
-                    txtLogin.setText("");
                     Intent resultIntent = new Intent(MainActivity.this, Result.class );
                     resultIntent.putExtra(LOGIN_INFO, loginInfo);
                     startActivity(resultIntent);
                 }
-                if (v == btnClear) {
+                else if (v == btnClear) {
 
                     txtLogin.setText("");
                     txtPassword.setText("");

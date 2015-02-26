@@ -47,6 +47,9 @@
         android:id="@+id/button_clear"
         android:layout_alignTop="@+id/button_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp" />
+        android:layout_marginTop="84dp"
+        android:longClickable="false"
+        android:nestedScrollingEnabled="false"
+        android:onClick="buttonClick" />
 
 </RelativeLayout>
