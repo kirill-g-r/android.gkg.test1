@@ -31,6 +31,8 @@ public class MainActivity extends ActionBarActivity {
         txtLogin = (TextView)findViewById(R.id.txtResult);
         txtPassword = (TextView)findViewById(R.id.txtPassword);
 
+        txtLogin.requestFocus();
+
         btnClear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -54,6 +56,12 @@ public class MainActivity extends ActionBarActivity {
                     loginInfo.setLogin(txtLogin.getText().toString());
                     loginInfo.setPassword(txtPassword.getText().toString());
 
+                    if (loginInfo.checkUser() == false) {
+
+                        return;
+
+                    }
+
                     Intent resultIntent = new Intent(MainActivity.this, Result.class );
                     resultIntent.putExtra(LOGIN_INFO, loginInfo);
                     startActivity(resultIntent);
@@ -69,17 +77,6 @@ public class MainActivity extends ActionBarActivity {
         });
 
     }
-
-    public void buttonClick(View view) {
-
-        if (view == btnLogin) {
-
-            txtLogin.setText("");
-
-        }
-
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

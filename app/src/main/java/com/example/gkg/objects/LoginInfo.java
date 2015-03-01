@@ -30,5 +30,19 @@ public class LoginInfo implements Serializable {
         this.password = password;
 
     }
+    public boolean checkUser() {
+
+        String trustedLogin = "admin";
+        String trustedPassword = "123";
+
+        if (this.login.equals(trustedLogin)
+                && this.password.equals(trustedPassword)) {
+
+            return true;
+
+        }
+
+        return false;
+    }
 
 }

@@ -1,7 +1,9 @@
 package com.example.gkg.app1;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.drawable.DrawableContainer;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,7 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 import com.example.gkg.objects.LoginInfo;
 
@@ -47,7 +55,7 @@ public class Result extends ActionBarActivity
 
         txtResult = (TextView) findViewById(R.id.txtResult);
 
-        txtResult.setText(String.format(txtResult.getText().toString(), loginInfo.getLogin()));
+        txtResult.setText(String.format(loginInfo.getLogin()));
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -75,6 +83,22 @@ public class Result extends ActionBarActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
+
+/*
+                Fragment fragment = new PlanetFragment();
+                Bundle args = new Bundle();
+
+                args.putInt(PlanetFragment.ARG_PLANET_NUMBER, number);
+                fragment.setArguments(args);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment).commit();
+  */
+
+                Intent locationIntent = new Intent(Result.this, MapsActivity.class);
+                startActivity(locationIntent);
+
+//                txtResult.setText("FUCK!!!");
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
@@ -115,6 +139,7 @@ public class Result extends ActionBarActivity
             return true;
         }
 
+        //show message to screen if method returns false
         return super.onOptionsItemSelected(item);
     }
 
@@ -155,6 +180,28 @@ public class Result extends ActionBarActivity
             super.onAttach(activity);
             ((Result) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+    }
+
+    public static class PlanetFragment extends Fragment {
+        public static final String ARG_PLANET_NUMBER = "planet_number";
+
+        public PlanetFragment() {
+            // Empty constructor required for fragment subclasses
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.activity_maps, container, false);
+            int i = getArguments().getInt(ARG_PLANET_NUMBER);
+            String planet = getResources().getStringArray(R.array.planets_array)[i];
+
+            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
+                    "drawable", getActivity().getPackageName());
+            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+            getActivity().setTitle(planet);
+            return rootView;
         }
     }
 
